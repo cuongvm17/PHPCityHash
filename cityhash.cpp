@@ -40,7 +40,7 @@ PHP_FUNCTION(CityHash128)
 	uint128 CityHash128WithSeed(const char *s, size_t len, uint128 seed);
 */
 
-static function_entry php_cityhash_functions[] = {
+static zend_function_entry php_cityhash_functions[] = {
   PHP_FE(CityHash64, NULL)
   PHP_FE(CityHash128, NULL) 
   { NULL, NULL, NULL }
