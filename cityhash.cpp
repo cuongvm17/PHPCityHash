@@ -1,5 +1,6 @@
 #include "php_cityhash.h"
 #include "city.h"
+#include <stdio.h>
 
 PHP_FUNCTION(CityHash64)
 {
@@ -12,7 +13,7 @@ PHP_FUNCTION(CityHash64)
   }
 
   uint64 hash = CityHash64(str, len);
-  char *hash_str = (char *)emalloc(21);
+  char *hash_str = (char *) malloc(21);
   sprintf(hash_str, "%llu", hash);
   RETVAL_STRING(hash_str);
 }
@@ -28,17 +29,10 @@ PHP_FUNCTION(CityHash128)
   }
 
   uint128 hash = CityHash128(str, len);
-  char *hash_str = (char *)emalloc(43);
+  char *hash_str = (char *) malloc(43);
   sprintf(hash_str, "%llu%llu", hash.first, hash.second);
   RETVAL_STRING(hash_str);
 }
-
-/* TODO:
-	uint64 CityHash64WithSeed(const char *buf, size_t len, uint64 seed);
-	uint64 CityHash64WithSeeds(const char *buf, size_t len, uint64 seed0, uint64 seed1);
-	uint128 CityHash128(const char *s, size_t len);
-	uint128 CityHash128WithSeed(const char *s, size_t len, uint128 seed);
-*/
 
 static zend_function_entry php_cityhash_functions[] = {
   PHP_FE(CityHash64, NULL)
