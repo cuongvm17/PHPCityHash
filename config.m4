@@ -1,14 +1,12 @@
-PHP_ARG_WITH(cityhash, for CityHash library support,
-  [  --with-cityhash       Include "CityHash" extension support])
+PHP_ARG_ENABLE(cityhash, Whether to enable the CityHashPHP extension, [ --enable-cityhash Enable CityHashPHP])
 
-if test $PHP_CITYHASH != "no"; then
-  PHP_REQUIRE_CXX()
-  PHP_NEW_EXTENSION(cityhash, cityhash.cpp, $ext_shared)
+if test "$PHP_CITYHASH" != "no"; then
+    source_file="cityhash/src/city.cc \
+    cityhash.cpp"
 
-  PHP_SUBST(CITYHASH_SHARED_LIBADD)
-  PHP_ADD_LIBRARY_WITH_PATH(stdc++, /usr/lib/, CITYHASH_SHARED_LIBADD)
-  PHP_ADD_LIBPATH(/usr/local/lib, CITYHASH_SHARED_LIBADD)
-  PHP_ADD_LIBPATH(/usr/lib, CITYHASH_SHARED_LIBADD)
-  PHP_ADD_LIBRARY(cityhash,, CITYHASH_SHARED_LIBADD)
-  PHP_ADD_INCLUDE(/usr/local/include)
+    PHP_REQUIRE_CXX()
+    PHP_ADD_INCLUDE(./cityhash/)
+
+    PHP_SUBST(CITYHASH_SHARED_LIBADD)
+    PHP_NEW_EXTENSION(cityhash, $source_file, $ext_shared)
 fi
